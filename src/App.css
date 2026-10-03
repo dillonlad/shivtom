@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+.container {
+  padding: 20px;
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.glad-btn {
+  background-color: rgba(109, 190, 107) !important;
+  border-color: rgba(109, 190, 107) !important;
+}
+
+@font-face {
+  font-family: 'SwirlyCanalope';
+  src: url('./assets/fonts/SwirlyCanalope_PERSONAL_USE_ONLY.otf') format('opentype');  
+  font-weight: normal;
+  font-style: normal;
+}

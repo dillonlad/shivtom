@@ -14,10 +14,6 @@ function App() {
 
   // Define your different backgrounds
   const backgrounds = {
-    '/': {
-      backgroundImage: "url('/assets/fuji-pink.png')",
-      backgroundColor: 'transparent'
-    },
     '/landing': {
       backgroundImage: 'none', // Remove the fuji image
       backgroundColor: '#f0d1e5' // The specific color you wanted

@@ -84,7 +84,7 @@ const Landing = () => {
 
         <div className="mb-5 text-center">
           <h1 style={{ fontSize: "60px", color: "#6b505f", fontFamily: 'SwirlyCanalope' }}>
-            Kaylan & Nikita
+            Tom & Shivani
           </h1>
         </div>
 

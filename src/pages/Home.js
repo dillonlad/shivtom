@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
-import { Row, Col, Container, Modal, Button, Form, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // Add this import
+import { Row, Col, Container, Modal, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  
-  
-  // State for Error Modal
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!password) return;
-    
+
     setIsLoggingIn(true);
     try {
-      // Update this URL to your specific Login Lambda endpoint
-      const response = await fetch('https://1juz8ik4ll.execute-api.eu-west-2.amazonaws.com/prod/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: password }),
-      });
+      const response = await fetch(
+        'https://1juz8ik4ll.execute-api.eu-west-2.amazonaws.com/prod/login',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: password }),
+        }
+      );
 
       if (response.status === 404) {
         setShowError(true);
       } else if (response.ok) {
         const eventsData = await response.json();
         console.log("Login Successful! Event Access:", eventsData);
-        // You can now store eventsData in state or context to show specific events
         navigate('/landing', { state: { events: eventsData } });
       } else {
         throw new Error("Server error");
@@ -42,44 +40,102 @@ const Home = () => {
     }
   };
 
-  
+  // Image list pointing to public/assets/
+  // Note: Adjust the file extensions (.jpg / .png) to match your files
+  const images = [
+    '/assets/1000090540.jpg',
+    '/assets/1000090541.jpg',
+    '/assets/1000090542.jpg',
+  ];
 
   return (
-    <Container className="p-2 mt-3 pt-4" style={{ fontFamily: 'SwirlyCanalope' }}>
-      <div className="mb-5">
-        <h1 style={{ fontSize: "75px", color: "#6b505f" }}>Kaylan Weds Nikita</h1>
+    <Container
+      fluid
+      className="px-3 py-4 min-vh-100 d-flex flex-column align-items-center"
+      style={{
+        fontFamily: 'SwirlyCanalope',
+        backgroundColor: 'transparent',
+      }}
+    >
+      {/* Top Header */}
+      <div className="text-center mt-2 mb-1">
+        <h1
+          style={{
+            fontSize: 'clamp(40px, 8vw, 75px)',
+            color: '#6b505f',
+            margin: 0,
+          }}
+        >
+          Tom & Shivani
+        </h1>
       </div>
 
-      <div className="mt-5 d-flex flex-column">
-        <p style={{ fontSize: "24px", color: "#6b505f" }}>Please enter the secret word from your invitation:</p>
-        
-        <Row className="w-100" style={{ maxWidth: '500px' }}>
-          <Col xs={8} className="pe-1"> 
-            <input 
-              type="password" 
+      {/* Password Prompt & Input Field (Directly below header) */}
+      <div className="text-center d-flex flex-column align-items-center mb-4 w-100">
+        <p className="mb-2" style={{ fontSize: '20px', color: '#6b505f' }}>
+          Please enter the secret word from your invitation:
+        </p>
+
+        <Row className="w-100 justify-content-center" style={{ maxWidth: '450px' }}>
+          <Col xs={8} className="pe-1">
+            <input
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="form-control h-100" 
+              className="form-control h-100"
               style={{ textAlign: 'center' }}
               onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
             />
           </Col>
           <Col xs={4} className="ps-1">
-            <Button 
-              className="w-100 h-100" 
+            <Button
+              className="w-100 h-100"
               onClick={handleLogin}
               disabled={isLoggingIn}
-              style={{ backgroundColor: "#6b505f", borderColor: "#6b505f" }}
+              style={{
+                backgroundColor: '#6b505f',
+                borderColor: '#6b505f',
+              }}
             >
               {isLoggingIn ? '...' : 'Enter'}
             </Button>
           </Col>
         </Row>
-
       </div>
 
-      {/* Error Modal for Incorrect Password */}
+      {/* Portrait Images Section directly below password */}
+      <div className="w-100 my-auto" style={{ maxWidth: '900px' }}>
+        <Row className="g-2 g-md-3 justify-content-center align-items-center">
+          {images.map((src, index) => (
+            <Col key={index} xs={12} sm={4} className="d-flex justify-content-center">
+              <div
+                style={{
+                  width: '100%',
+                  maxWidth: '280px',
+                  aspectRatio: '3 / 4', // Preserves portrait ratio container
+                  borderRadius: '5px',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                }}
+              >
+                <img
+                  src={src}
+                  alt={`Tom and Shivani ${index + 1}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover', // Maintains portrait aspect ratio without distortion
+                    display: 'block',
+                  }}
+                />
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
+
+      {/* Error Modal */}
       <Modal show={showError} onHide={() => setShowError(false)} centered size="sm">
         <Modal.Body className="text-center p-4">
           <h4 className="text-danger">Oops!</h4>
@@ -89,8 +145,6 @@ const Home = () => {
           </Button>
         </Modal.Body>
       </Modal>
-
-      
     </Container>
   );
 };

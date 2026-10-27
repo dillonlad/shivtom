@@ -30,12 +30,11 @@ function App() {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     transition: 'all 0.5s ease', // Optional: makes the color/image swap smooth
-    ...currentBackground
   };
 
   return (
     <div className="d-flex">
-      <div className="content p-5 w-100" style={dynamicStyle}>
+      <div className="w-100" style={dynamicStyle}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/landing" element={<Landing />} />

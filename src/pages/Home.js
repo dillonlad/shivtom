@@ -43,7 +43,7 @@ const Home = () => {
   // Image list pointing to public/assets/
   // Note: Adjust the file extensions (.jpg / .png) to match your files
   const images = [
-    '/assets/1000090540.jpg',
+    '/assets/1000090543.jpg',
     '/assets/1000090541.jpg',
     '/assets/1000090542.jpg',
   ];

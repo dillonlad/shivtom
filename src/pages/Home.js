@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Container, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Container, Modal, Button, Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -40,8 +40,6 @@ const Home = () => {
     }
   };
 
-  // Image list pointing to public/assets/
-  // Note: Adjust the file extensions (.jpg / .png) to match your files
   const images = [
     '/assets/1000090543.jpg',
     '/assets/1000090541.jpg',
@@ -70,7 +68,7 @@ const Home = () => {
         </h1>
       </div>
 
-      {/* Password Prompt & Input Field (Directly below header) */}
+      {/* Password Prompt & Input Field */}
       <div className="text-center d-flex flex-column align-items-center mb-4 w-100">
         <p className="mb-2" style={{ fontSize: '20px', color: '#6b505f' }}>
           Please enter the secret word from your invitation:
@@ -104,16 +102,50 @@ const Home = () => {
         </Row>
       </div>
 
-      {/* Portrait Images Section directly below password */}
+      {/* Images Section */}
       <div className="w-100 my-auto" style={{ maxWidth: '900px' }}>
-        <Row className="g-2 g-md-3 justify-content-center align-items-center">
+        
+        {/* MOBILE ONLY: Carousel view */}
+        <div className="d-md-none px-3">
+          <Carousel indicators interval={4000} pause="hover">
+            {images.map((src, index) => (
+              <Carousel.Item key={index}>
+                <div
+                  className="mx-auto"
+                  style={{
+                    width: '100%',
+                    maxWidth: '280px',
+                    aspectRatio: '3 / 4',
+                    borderRadius: '5px',
+                    overflow: 'hidden',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={`Tom and Shivani ${index + 1}`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </div>
+
+        {/* DESKTOP/TABLET ONLY: 3-Column Grid view */}
+        <Row className="g-2 g-md-3 justify-content-center align-items-center d-none d-md-flex">
           {images.map((src, index) => (
-            <Col key={index} xs={12} sm={4} className="d-flex justify-content-center">
+            <Col key={index} md={4} className="d-flex justify-content-center">
               <div
                 style={{
                   width: '100%',
                   maxWidth: '280px',
-                  aspectRatio: '3 / 4', // Preserves portrait ratio container
+                  aspectRatio: '3 / 4',
                   borderRadius: '5px',
                   overflow: 'hidden',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
@@ -125,7 +157,7 @@ const Home = () => {
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover', // Maintains portrait aspect ratio without distortion
+                    objectFit: 'cover',
                     display: 'block',
                   }}
                 />
